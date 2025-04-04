@@ -1,0 +1,68 @@
+body {
+    margin: 0px;
+    padding: 60px;
+    background-color: black;
+    background-image: url(/asset/svg/pred.svg);
+    background-size: 95vh;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: 50px;
+}
+
+.head {
+    font-size: 100px;
+    color: aliceblue;
+    font-style: italic;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+    from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #8e00e6, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+    }
+
+    to {
+        text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+    }
+}
+
+.essential {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    opacity: 0.7;
+}
+
+.button {
+    inherits: none;
+    color: rgba(127, 244, 255, 0.884);
+    font-size: 50px;
+    background-color: black;
+    border: 2px solid black;
+    transition: transform 0.7s ease-in-out;
+    font-weight: 700;
+}
+
+.button:hover {
+    transform: scale(1.2);
+    border: 2px solid red;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.output {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    opacity: 0.7;
+}

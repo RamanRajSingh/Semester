@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workforce Departure Forcast</title>
+    <link rel="icon" href="asset/icon/favicon.ico">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="main">
+    <! Heading for the page -->
+        <h1 class="head">Workforce Attrition Prediction</h1>
+        <! Essential Section of the page -->
+            <section class="first">
+                <h1 class="special-button">Employee Demographics</h1>
+                <div class="input-container">
+                    <input type="text" class="input1" placeholder="Enter Employee Number">
+                    <input type="text" class="input1" placeholder="Enter Employee Age">
+                    <input type="text" class="input1" placeholder="Enter Gender">
+                    <input type="text" class="input1" placeholder="Enter Marital Status">
+                </div>
+            </section>
+            <! Optional Sections of the page -->
+                <section class=" second">
+                    <button class="special-button" onclick="toggleInputs('input2')"><input type="checkbox">Job and
+                        Career-related
+                        Factors</button>
+                    <div class="input-container input2" style="display: none;">
+                        <input type="text" class="input2" placeholder="Enter Job Role">
+                        <input type="text" class="input2" placeholder="Enter Job Level">
+                        <input type="text" class="input2" placeholder="Enter Job Involvement">
+                        <input type="text" class="input2" placeholder="Department">
+                        <input type="text" class="input2" placeholder="Years at Company">
+                        <input type="text" class="input2" placeholder="Years in Current Role">
+                        <input type="text" class="input2" placeholder="Years with Current Manager">
+                    </div>
+                </section>
+                <section class="third">
+                    <button class="special-button" onclick="toggleInputs('input3')"><input type="checkbox"> Work
+                        Environment and
+                        Satisfaction</button>
+                    <div class="input-container input3" style="display: none;">
+                        <input type="text" class="input3" placeholder="WorkLifeBalance">
+                        <input type="text" class="input3" placeholder="Enter Job Satisfaction">
+                        <input type="text" class="input3" placeholder="Enter Environment Satisfaction">
+                        <input type="text" class="input3" placeholder="Enter Relationship Satisfaction">
+                    </div>
+                </section>
+                <section class="four">
+                    <button class="special-button" onclick="toggleInputs('input4')"><input type="checkbox"> Compensation
+                        and Benefits</button>
+                    <div class="input-container input4" style="display: none;">
+                        <input type="text" class="input4" placeholder="Enter Monthly Income">
+                        <input type="text" class="input4" placeholder="Enter percent Salary Hike">
+                        <input type="text" class="input4" placeholder="Enter Stock Option Level">
+                    </div>
+                </section>
+                <section class="five">
+                    <button class="special-button" onclick="toggleInputs('input5')"><input type="checkbox"> Work &
+                        Performance History</button>
+                    <div class="input-container input5" style="display: none;">
+                        <input type="text" class="input5" placeholder="Enter Total Working Years">
+                        <input type="text" class="input5" placeholder="Enter Number of Companies Worked">
+                        <input type="text" class="input5" placeholder="Enter Performance Rating">
+                        <input type="text" class="input5" placeholder="Enter Training Times Last Year">
+                    </div>
+                </section>
+                <section class="six">
+                    <button class="special-button" onclick="toggleInputs('input6')"><input type="checkbox"> Workplace
+                        Behavior &
+                        Conditions</button>
+                    <div class="input-container input6" style="display: none;">
+                        <input type="text" class="input6" placeholder="Enter Distance From Home">
+                        <input type="text" class="input6" placeholder="Enter OverTime">
+                        <input type="text" class="input6" placeholder="Enter Business Travel">
+                    </div>
+                </section>
+                <! Button to submit entries of the page -->
+                    <Button onclick="ok" class="submit_button">Predict</Button>
+                    <script type="text/javascript" src="script.js"></script>
+</body>
+<script>
+    function toggleInputs(className) {
+        const inputs = document.querySelector(`.input-container.${className}`);
+        const currentDisplay = window.getComputedStyle(inputs).display;
+
+        if (currentDisplay === "none") {
+            inputs.style.display = "flex"; // Show the inputs
+        } else {
+            inputs.style.display = "none"; // Hide the inputs
+        }
+    }
+</script>
+
+</html>

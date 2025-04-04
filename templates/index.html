@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workforce Attrition Prediction</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <script>
+        function runCell(cellIndex) {
+            fetch(`/run-cell/${cellIndex}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById(`output-${cellIndex}`).innerText = data.text || "No Text Output";
+
+                    if (data.images && data.images.length > 0) {
+                        document.getElementById(`image-${cellIndex}`).src = `/${data.images[0]}`;
+                        document.getElementById(`image-${cellIndex}`).style.display = "block";
+                    }
+                });
+        }
+    </script>
+</head>
+
+<body>
+    <h1 class="head">Workforce Attrition Prediction</h1>
+    {% for i in range(3, total_cells) %}
+    <div class="essential">
+        <button class="button" onclick="runCell({{ i }})">Run Cell {{ i }}</button>
+        <p class="output" id="output-{{ i }}"></p>
+        <img id="image-{{ i }}" style="display:none; max-width: 100%;" />
+    </div>
+    {% endfor %}
+</body>
+
+</html>

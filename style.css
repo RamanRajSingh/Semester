@@ -1,0 +1,188 @@
+@font-face {
+    font-family: 'rrs';
+    src: url(asset/font/Gilroy-ExtraBold.otf);
+}
+
+.main {
+    margin: 0px;
+    padding: 0px;
+    background: rgb(255, 129, 0);
+    background: radial-gradient(circle, rgba(255, 129, 0, 1) 20%, rgba(2, 0, 36, 1) 47%, rgba(33, 107, 159, 1) 77%);
+}
+
+.head {
+    font-size: 100px;
+    color: aliceblue;
+    font-style: italic;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+    from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #8e00e6, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+    }
+
+    vian {
+        text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+    }
+
+    to {
+        text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+    }
+}
+
+.special-button {
+    border: none;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.227);
+    backdrop-filter: blur(100px);
+    font-size: 30px;
+    font-family: rrs;
+    width: 90%;
+    position: relative;
+    left: 10%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.main>.first {}
+
+.main>.first>.input-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.main>.first>.input-container>.input1 {
+    color: white;
+    background-color: black;
+    border-radius: 25px;
+    width: 11.5%;
+    height: 25px;
+    padding-block: 2px;
+    padding-inline: 7px;
+    margin-block: 10px;
+}
+
+
+.main>.second {}
+
+.main>.second>.input-container {
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: nowrap;
+    padding-inline: 17px;
+}
+
+.main>.second>.input-container>.input2 {
+    color: white;
+    background-color: black;
+    border-radius: 25px;
+    height: 25px;
+    padding-block: 2px;
+    padding-inline: 7px;
+    margin-block: 10px;
+}
+
+
+.main>.third {}
+
+.main>.third>.input-container {
+    flex-direction: row;
+    justify-content: space-between;
+    padding-inline: 50px;
+}
+
+.main>.third>.input-container>.input3 {
+    color: white;
+    background-color: black;
+    border-radius: 25px;
+    width: 20%;
+    height: 25px;
+    padding-block: 2px;
+    padding-inline: 7px;
+    margin-block: 10px;
+}
+
+.main>.four {}
+
+.main>.four>.input-container {
+    flex-direction: row;
+    justify-content: space-between;
+    padding-inline: 50px;
+}
+
+.main>.four>.input-container>.input4 {
+    color: white;
+    background-color: black;
+    border-radius: 25px;
+    width: 30%;
+    height: 25px;
+    padding-block: 2px;
+    padding-inline: 7px;
+    margin-block: 10px;
+}
+
+.main>.five {}
+
+.main>.five>.input-container {
+    flex-direction: row;
+    justify-content: space-between;
+    padding-inline: 50px;
+}
+
+.main>.five>.input-container>.input5 {
+    color: white;
+    background-color: black;
+    border-radius: 25px;
+    width: 20%;
+    height: 25px;
+    padding-block: 2px;
+    padding-inline: 7px;
+    margin-block: 10px;
+}
+
+.main>.six {}
+
+.main>.six>.input-container {
+    flex-direction: row;
+    justify-content: space-between;
+    padding-inline: 50px;
+}
+
+.main>.six>.input-container>.input6 {
+    color: white;
+    background-color: black;
+    border-radius: 25px;
+    width: 30%;
+    height: 25px;
+    padding-block: 2px;
+    padding-inline: 7px;
+    margin-block: 10px;
+}
+
+.submit_button {
+    display: flex;
+    color: white;
+    background-color: black;
+    border-radius: 25px;
+    width: 20%;
+    height: 45px;
+    padding-block: 2px;
+    padding-inline: 7px;
+    justify-self: center;
+    align-content: center;
+    justify-content: center;
+    font-family: rrs;
+    font-size: 30px;
+    margin-top: 15px;
+}
