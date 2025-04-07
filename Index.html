@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workforce Departure Forcast</title>
+    <title>Workforce Attrition Prediction</title>
     <link rel="icon" href="asset/icon/favicon.ico">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -13,7 +13,6 @@
     <! Heading for the page -->
         <h1 class="head">Workforce Attrition Prediction</h1>
         <form class="form">
-
             <! Essential Section of the page -->
                 <section class="first">
                     <h1 class="special-button one">Employee Demographics</h1>
@@ -26,7 +25,7 @@
                 </section>
                 <! Optional Sections of the page -->
                     <section class="second">
-                        <input type="checkbox" id="jobCareerCheckbox" onchange="toggleInputs('input2')">
+                        <input type="checkbox" class="tick" id="jobCareerCheckbox" onchange="toggleInputs('input2')">
                         <label for="jobCareerCheckbox" class="special-button">Job and Career-related Factors</label>
                         <div class="input-container input2" style="display: none;">
                             <input type="text" class="input2" name="job_role" placeholder="Enter Job Role">
@@ -42,7 +41,8 @@
                     </section>
 
                     <section class="third">
-                        <input type="checkbox" id="WorkEnvironmentandSatisfaction" onchange="toggleInputs('input3')">
+                        <input type="checkbox" class="tick" id="WorkEnvironmentandSatisfaction"
+                            onchange="toggleInputs('input3')">
                         <label for="WorkEnvironmentandSatisfaction" class="special-button">Work Environment and
                             Satisfaction</label>
                         <div class="input-container input3" style="display: none;">
@@ -53,7 +53,8 @@
                         </div>
                     </section>
                     <section class="four">
-                        <input type="checkbox" id="CompensationandBenefits" onchange="toggleInputs('input4')">
+                        <input type="checkbox" class="tick" id="CompensationandBenefits"
+                            onchange="toggleInputs('input4')">
                         <label for="CompensationandBenefits" class="special-button">Compensation and Benefits</label>
                         <div class="input-container input4" style="display: none;">
                             <input type="text" class="input4" placeholder="Enter Monthly Income">
@@ -62,7 +63,8 @@
                         </div>
                     </section>
                     <section class="five">
-                        <input type="checkbox" id="Work&PerformanceHistory" onchange="toggleInputs('input5')">
+                        <input type="checkbox" class="tick" id="Work&PerformanceHistory"
+                            onchange="toggleInputs('input5')">
                         <label for="Work&PerformanceHistory" class="special-button">Work & Performance History</label>
                         <div class="input-container input5" style="display: none;">
                             <input type="text" class="input5" placeholder="Enter Total Working Years">
@@ -72,7 +74,8 @@
                         </div>
                     </section>
                     <section class="six">
-                        <input type="checkbox" id="WorkplaceBehavior&Conditions" onchange="toggleInputs('input6')">
+                        <input type="checkbox" class="tick" id="WorkplaceBehavior&Conditions"
+                            onchange="toggleInputs('input6')">
                         <label for="WorkplaceBehavior&Conditions" class="special-button">Workplace Behavior &
                             Conditions</label>
                         <div class="input-container input6" style="display: none;">
@@ -83,8 +86,6 @@
                     </section>
                     <! Button to submit entries of the page -->
                         <button onclick="ok()" class="submit_button">Predict</button>
-
-
                         <script type="text/javascript" src="script.js"></script>
         </form>
 </body>

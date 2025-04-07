@@ -3,6 +3,79 @@
     src: url(asset/font/Gilroy-ExtraBold.otf);
 }
 
+/* for login page */
+.login-page {
+    flex-direction: column;
+    justify-self: center;
+    align-self: center;
+    margin: 0px;
+    padding: 0px;
+    background-image: url(asset/img/login.png);
+    background-size: 98vw;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh
+}
+
+.login-page>.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 39%;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50px;
+}
+
+.login-page>.login-form>.login-header {
+    font-size: 70px;
+    color: aliceblue;
+    font-family: rrs;
+    font-style: italic;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    cursor: context-menu;
+}
+
+.login-page>.login-form>.input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.login-page>.login-form>.input-container>.input {
+    color: white;
+    background-color: black;
+    border-radius: 25px;
+    width: 100%;
+    height: 25px;
+    margin-block: 10px;
+}
+
+.login-page>.login-form>.login-button {
+    display: flex;
+    color: white;
+    background-color: black;
+    border-radius: 25px;
+    justify-self: center;
+    align-content: center;
+    justify-content: center;
+    font-family: rrs;
+    font-size: 20px;
+    flex-wrap: wrap;
+    cursor: pointer;
+    width: 50%;
+}
+
+/* for workforce attrition prediction */
 .main {
     margin: 0px;
     padding: 0px;
@@ -55,6 +128,10 @@
     width: 90%;
 }
 
+.tick:hover {
+    cursor: pointer;
+}
+
 .main>.form>.first {}
 
 .main>.form>.first>.one {
@@ -64,8 +141,9 @@
 .main>.form>.first>.input-container {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
+    padding-inline: 20px;
 }
 
 .main>.form>.first>.input-container>.input1 {
@@ -74,8 +152,6 @@
     border-radius: 25px;
     width: 11.5%;
     height: 25px;
-    padding-block: 2px;
-    padding-inline: 7px;
     margin-block: 10px;
 }
 
@@ -86,7 +162,6 @@
     flex-direction: row;
     justify-content: space-evenly;
     flex-wrap: nowrap;
-    padding-inline: 17px;
 }
 
 .main>.form>.second>.input-container>.input2 {
@@ -105,7 +180,7 @@
 .main>.form>.third>.input-container {
     flex-direction: row;
     justify-content: space-between;
-    padding-inline: 50px;
+    padding-inline: 29px;
 }
 
 .main>.form>.third>.input-container>.input3 {
@@ -124,7 +199,7 @@
 .main>.form>.four>.input-container {
     flex-direction: row;
     justify-content: space-between;
-    padding-inline: 50px;
+    padding-inline: 28px;
 }
 
 .main>.form>.four>.input-container>.input4 {
@@ -191,4 +266,8 @@
     font-family: rrs;
     font-size: 30px;
     margin-top: 15px;
+}
+
+.submit_button:hover {
+    cursor: pointer;
 }
