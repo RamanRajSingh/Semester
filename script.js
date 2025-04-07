@@ -57,3 +57,37 @@ function disableMe() {
         return true;
     }
 }
+// This function is for the button toggle and checkbox tick on-click event
+function toggleInputs(className) {
+    const inputs = document.querySelector(`.input-container.${className}`);
+    const currentDisplay = window.getComputedStyle(inputs).display;
+
+    if (currentDisplay === "none") {
+        inputs.style.display = "flex"; // Show the inputs
+    } else {
+        inputs.style.display = "none"; // Hide the inputs
+    }
+}
+// This function is for the predict button 
+function ok() {
+    const inputs = document.querySelectorAll('.input1');
+    const data = {
+        employee_number: inputs[0].value,
+        employee_age: inputs[1].value,
+        gender: inputs[2].value,
+        marital_status: inputs[3].value
+    };
+
+    fetch('http://localhost:3000/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+        .then(res => res.text())
+        .then(response => {
+            alert(response);
+        })
+        .catch(err => {
+            console.error("Error:", err);
+        });
+}

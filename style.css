@@ -10,6 +10,10 @@
     background: radial-gradient(circle, rgba(255, 129, 0, 1) 20%, rgba(2, 0, 36, 1) 47%, rgba(33, 107, 159, 1) 77%);
 }
 
+.main>.form {
+    padding-inline-start: 20px;
+}
+
 .head {
     font-size: 100px;
     color: aliceblue;
@@ -38,31 +42,33 @@
 }
 
 .special-button {
+    padding: 10px 20px;
     border: none;
-    color: black;
-    background-color: rgba(255, 255, 255, 0.227);
+    background-color: #0000005c;
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
+    display: inline-block;
     backdrop-filter: blur(100px);
     font-size: 30px;
     font-family: rrs;
     width: 90%;
-    position: relative;
-    left: 10%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
 }
 
-.main>.first {}
+.main>.form>.first {}
 
-.main>.first>.input-container {
+.main>.form>.first>.one {
+    width: 91.5%;
+}
+
+.main>.form>.first>.input-container {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
 }
 
-.main>.first>.input-container>.input1 {
+.main>.form>.first>.input-container>.input1 {
     color: white;
     background-color: black;
     border-radius: 25px;
@@ -74,16 +80,16 @@
 }
 
 
-.main>.second {}
+.main>.form>.second {}
 
-.main>.second>.input-container {
+.main>.form>.second>.input-container {
     flex-direction: row;
     justify-content: space-evenly;
     flex-wrap: nowrap;
     padding-inline: 17px;
 }
 
-.main>.second>.input-container>.input2 {
+.main>.form>.second>.input-container>.input2 {
     color: white;
     background-color: black;
     border-radius: 25px;
@@ -94,15 +100,15 @@
 }
 
 
-.main>.third {}
+.main>.form>.third {}
 
-.main>.third>.input-container {
+.main>.form>.third>.input-container {
     flex-direction: row;
     justify-content: space-between;
     padding-inline: 50px;
 }
 
-.main>.third>.input-container>.input3 {
+.main>.form>.third>.input-container>.input3 {
     color: white;
     background-color: black;
     border-radius: 25px;
@@ -113,15 +119,15 @@
     margin-block: 10px;
 }
 
-.main>.four {}
+.main>.form>.four {}
 
-.main>.four>.input-container {
+.main>.form>.four>.input-container {
     flex-direction: row;
     justify-content: space-between;
     padding-inline: 50px;
 }
 
-.main>.four>.input-container>.input4 {
+.main>.form>.four>.input-container>.input4 {
     color: white;
     background-color: black;
     border-radius: 25px;
@@ -132,15 +138,15 @@
     margin-block: 10px;
 }
 
-.main>.five {}
+.main>.form>.five {}
 
-.main>.five>.input-container {
+.main>.form>.five>.input-container {
     flex-direction: row;
     justify-content: space-between;
     padding-inline: 50px;
 }
 
-.main>.five>.input-container>.input5 {
+.main>.form>.five>.input-container>.input5 {
     color: white;
     background-color: black;
     border-radius: 25px;
@@ -151,15 +157,15 @@
     margin-block: 10px;
 }
 
-.main>.six {}
+.main>.form>.six {}
 
-.main>.six>.input-container {
+.main>.form>.six>.input-container {
     flex-direction: row;
     justify-content: space-between;
     padding-inline: 50px;
 }
 
-.main>.six>.input-container>.input6 {
+.main>.form>.six>.input-container>.input6 {
     color: white;
     background-color: black;
     border-radius: 25px;
