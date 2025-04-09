@@ -6,36 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="../static/style.css">
-    <link rel="icon" href="../asset/icon/favicon.ico">
+    <link rel="icon" href="../static/icon/favicon.ico">
 </head>
 
 <body class="login-page">
-    <form class="login-form" onsubmit="return handleLogin(event)">
+    <form class="login-form" method="POST" action="/">
         <h1 class="login-header">Login</h1>
         <div class="input-container">
-            <input type="text" id="username" class="input" placeholder="Enter Username" required>
-            <input type="password" id="password" class="input" placeholder="Enter Password" required>
+            <input type="text" name="username" id="username" class="input" placeholder="Enter Username" required>
+            <input type="password" name="password" id="password" class="input" placeholder="Enter Password" required>
         </div>
         <button type="submit" class="login-button">Login</button>
     </form>
 
-    <script>
-        function handleLogin(event) {
-            event.preventDefault(); // Prevent form submission
 
-            // Get username and password values
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            // Simple validation (replace with actual authentication logic)
-            if (username === "admin" && password === "password") {
-                // Redirect to Index.html on successful login
-                window.location.href = "Index.html";
-            } else {
-                alert("Invalid username or password. Please try again.");
-            }
-        }
-    </script>
 </body>
 
 </html>

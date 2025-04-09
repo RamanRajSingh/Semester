@@ -12,35 +12,41 @@
 <body class="main">
     <! Heading for the page -->
         <h1 class="head">Workforce Attrition Prediction</h1>
-        <form class="form">
+        <form class="form" method="POST" action="/index">
+
             <! Essential Section of the page -->
                 <section class="first">
                     <h1 class="special-button one">Employee Demographics</h1>
                     <div class="input-container">
-                        <input type="text" class="input1" placeholder="Enter Employee Number">
-                        <input type="text" class="input1" placeholder="Enter Employee Age">
-                        <input type="text" class="input1" placeholder="Enter Gender">
-                        <input type="text" class="input1" placeholder="Enter Marital Status">
-                        <input type="text" class="input1" placeholder="Enter Education">
-                        <input type="text" class="input1" placeholder="Enter Education field">
+                        <input type="text" name="employee_number" class="input1" placeholder="Enter Employee Number">
+                        <input type="text" name="employee_age" class="input1" placeholder="Enter Employee Age">
+                        <input type="text" name="gender" class="input1" placeholder="Enter Gender">
+                        <input type="text" name="marital_status" class="input1" placeholder="Enter Marital Status">
+                        <input type="text" name="education" class="input1" placeholder="Enter Education">
+                        <input type="text" name="education_field" class="input1" placeholder="Enter Education field">
                     </div>
                 </section>
                 <section class="second">
                     <h1 class="special-button">Work & Performance History</h1>
                     <div class="input-container input2">
-                        <input type="text" class="input2" placeholder="Enter Total Working Years">
-                        <input type="text" class="input2" placeholder="Enter Number of Companies Worked">
-                        <input type="text" class="input2" placeholder="Enter Performance Rating">
-                        <input type="text" class="input2" placeholder="Enter Training Times Last Year">
+                        <input type="text" name="total_working_years" class="input2"
+                            placeholder="Enter Total Working Years">
+                        <input type="text" name="companies_worked" class="input2"
+                            placeholder="Enter Number of Companies Worked">
+                        <input type="text" name="performance_rating" class="input2"
+                            placeholder="Enter Performance Rating">
+                        <input type="text" name="training_times_last_year" class="input2"
+                            placeholder="Enter Training Times Last Year">
                     </div>
                 </section>
                 <section class="third">
                     <h1 class="special-button">Workplace Behavior &
                         Conditions</h1>
                     <div class="input-container input3">
-                        <input type="text" class="input3" placeholder="Enter Distance From Home">
-                        <input type="text" class="input3" placeholder="Enter OverTime">
-                        <input type="text" class="input3" placeholder="Enter Business Travel">
+                        <input type="text" name="distance_from_home" class="input3"
+                            placeholder="Enter Distance From Home">
+                        <input type="text" name="overtime" class="input3" placeholder="Enter OverTime">
+                        <input type="text" name="business_travel" class="input3" placeholder="Enter Business Travel">
                     </div>
                 </section>
 
