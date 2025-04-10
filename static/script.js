@@ -54,12 +54,14 @@ function toggleInputs(className) {
     }
 }
 
-function ok() {
+function ok(event) {
+    // Prevent default form action if called from button in a form
+    if (event) event.preventDefault();
+
     const allInputs = document.querySelectorAll("input[type='text']");
     let data = {};
 
     allInputs.forEach(input => {
-        // Get parent container to check display status
         const container = input.closest(".input-container");
         if (container && window.getComputedStyle(container).display !== "none") {
             const key = input.placeholder.trim().replace(/ /g, "_").toLowerCase();
@@ -67,18 +69,40 @@ function ok() {
         }
     });
 
-    // Send data to Flask
-    fetch('/submit', {
+    // Send data to Flask route '/index'
+    fetch('/index', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-    }).then(response => {
-        if (response.ok) {
-            alert("Data Submitted Successfully!");
-        } else {
-            alert("Error submitting data!");
-        }
-    });
-}
+    })
+        .then(response => {
+            if (response.ok) {
+                alert("Data Submitted Successfully!");
+            } else {
+                alert("Error submitting data!");
+            }
+        })
+        .catch(error => {
+            console.error("Fetch error:", error);
+            alert("An error occurred during submission!");
+        });
+};
+
+
+// Send data to Flask
+fetch('/index', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+}).then(response => {
+    if (response.ok) {
+        alert("Data Submitted Successfully!");
+    } else {
+        alert("Error submitting data!");
+    }
+});
+

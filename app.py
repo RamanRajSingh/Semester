@@ -9,8 +9,8 @@ app.secret_key = 'your_secret_key'
 def create_connection():
     return mysql.connector.connect(
         host="localhost",
-        user="your_mysql_user",
-        password="your_mysql_password",
+        user="root",
+        password="Raman@20",
         database="employee_db"
     )
 
@@ -33,6 +33,9 @@ def login():
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
+        conn = None  # Initialize connection variable
+        cursor = None
+
         try:
             conn = create_connection()
             cursor = conn.cursor()
@@ -93,9 +96,15 @@ def index():
             print("Database Error:", e)  # Shows in terminal
 
         finally:
-            if conn.is_connected():
+            if cursor:
                 cursor.close()
-                conn.close()
+            if conn is not None:
+                try:
+                    if conn.is_connected():
+                        conn.close()
+                except:
+                    pass
+
 
     return render_template('index.html')
 
