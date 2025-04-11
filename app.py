@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import mysql.connector
 from mysql.connector import Error
+import pickle
+import joblib
+model = joblib.load('/models/model_1_2_3.pkl')
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -33,7 +36,7 @@ def login():
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        conn = None  # Initialize connection variable
+        conn = None
         cursor = None
 
         try:
@@ -55,8 +58,6 @@ def index():
                 'distance_from_home': request.form.get('distance_from_home'),
                 'overtime': request.form.get('overtime'),
                 'business_travel': request.form.get('business_travel'),
-
-                # Optional Fields
                 'job_role': request.form.get('job_role') or None,
                 'job_level': request.form.get('job_level') or None,
                 'job_involvement': request.form.get('job_involvement') or None,
@@ -74,7 +75,7 @@ def index():
                 'stock_option_level': request.form.get('stock_option_level') or None,
             }
 
-            # Insert into SQL (must match your table)
+            # Insert into SQL
             insert_query = """
                 INSERT INTO employee_data (
                     employee_number, employee_age, gender, marital_status, education, education_field,
@@ -89,11 +90,44 @@ def index():
 
             cursor.execute(insert_query, tuple(data.values()))
             conn.commit()
-            flash("Data saved successfully!")
+
+            # --- Prediction Logic Starts ---
+            # Fetch most recent row
+            cursor.execute("SELECT * FROM employee_data ORDER BY id DESC LIMIT 1")
+            row = cursor.fetchone()
+
+            # Get columns used in each section
+            section_1_2_3 = ['employee_age','business_travel','distance_from_home','education','education_field','employee_number','gender','marital_status','companies_worked','overtime','performance_rating','total_working_years','training_times_last_year']
+            section_4 = ['department','job_involvement','job_level','job_role']
+            section_5 = ['environment_satisfaction','job_satisfaction','relationship_satisfaction','work_life_balance']
+            section_6 = ['monthly_income','salary_hike','stock_option_level','years_at_company','years_in_role','years_since_last_promotion','years_with_manager']
+
+            selected = ['1', '2', '3']
+            features = []
+            columns = section_1_2_3[:]
+
+            for i, section in enumerate([section_4, section_5, section_6], start=4):
+                if any(data[col] not in [None, '', 'None'] for col in section):
+                    selected.append(str(i))
+                    columns.extend(section)
+
+            # Build features
+            for col in columns:
+                val = row[cursor.column_names.index(col)]
+                features.append(int(val) if val is not None else 0)
+
+            model_key = '_'.join(selected)
+            model_filename = f'models/model_{model_key}.pkl'
+
+            with open(model_filename, 'rb') as f:
+                model = pickle.load(f)
+
+            prediction = model.predict([features])[0]
+            flash(f"Prediction: {'Yes' if prediction == 1 else 'No'}")
 
         except Error as e:
-            flash(f"Error: {e}")  # Shows on website
-            print("Database Error:", e)  # Shows in terminal
+            flash(f"Error: {e}")
+            print("Database Error:", e)
 
         finally:
             if cursor:
@@ -105,8 +139,11 @@ def index():
                 except:
                     pass
 
-
     return render_template('index.html')
+
+# Convert user form data to input format for model
+# Example assuming you’ve preprocessed properly
+
 
 # Run Server
 if __name__ == '__main__':
