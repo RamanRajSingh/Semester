@@ -12,7 +12,7 @@
 <body class="main">
     <! Heading for the page -->
         <h1 class="head">Workforce Attrition Prediction</h1>
-        <form class="form" method="POST" action="/index">
+        <form class="form" method="POST" action="/index" id="myForm" onsubmit="return attachSections()">
 
             <! Essential Section of the page -->
                 <section class="first">
@@ -52,7 +52,8 @@
 
                 <! Optional Sections of the page -->
                     <section class="fourth">
-                        <input type="checkbox" class="tick" id="jobCareerCheckbox" onchange="toggleInputs('input4')">
+                        <input type="checkbox" class="tick" id="jobCareerCheckbox" value="4" name="section"
+                            onchange="toggleInputs('input4'); updateCheckedSections();">
                         <label for="jobCareerCheckbox" class="special-button">Job and Career-related Factors</label>
                         <div class="input-container input4" style="display: none;">
                             <input type="text" class="input4" name="job_role" placeholder="Enter Job Role">
@@ -64,38 +65,43 @@
                             <input type="text" class="input4" name="years_in_role" placeholder="Years in Current Role">
                             <input type="text" class="input4" name="years_with_manager"
                                 placeholder="Years with Current Manager">
-                            <input type="text" class="input4" name="Job Involvement"
-                                placeholder="Enter Job Involvement">
-                            <input type="text" class="input4" name="Years Since Last Promotion"
+                            <input type="text" class="input4" name="years_since_last_promotion"
                                 placeholder="Enter Years Since Last Promotion">
                         </div>
                     </section>
 
                     <section class="fifth">
-                        <input type="checkbox" class="tick" id="WorkEnvironmentandSatisfaction"
-                            onchange="toggleInputs('input5')">
+                        <input type="checkbox" class="tick" id="WorkEnvironmentandSatisfaction" value="5" name="section"
+                            onchange="toggleInputs('input5'); updateCheckedSections();">
                         <label for="WorkEnvironmentandSatisfaction" class="special-button">Work Environment and
                             Satisfaction</label>
                         <div class="input-container input5" style="display: none;">
-                            <input type="text" class="input5" placeholder="WorkLifeBalance">
-                            <input type="text" class="input5" placeholder="Enter Job Satisfaction">
-                            <input type="text" class="input5" placeholder="Enter Environment Satisfaction">
-                            <input type="text" class="input5" placeholder="Enter Relationship Satisfaction">
+                            <input type="text" class="input5" name="work_life_balance" placeholder="WorkLifeBalance">
+                            <input type="text" class="input5" name="job_satisfaction"
+                                placeholder="Enter Job Satisfaction">
+                            <input type="text" class="input5" name="environment_satisfaction"
+                                placeholder="Enter Environment Satisfaction">
+                            <input type="text" class="input5" name="relationship_satisfaction"
+                                placeholder="Enter Relationship Satisfaction">
                         </div>
                     </section>
                     <section class="sixth">
-                        <input type="checkbox" class="tick" id="CompensationandBenefits"
-                            onchange="toggleInputs('input6')">
+                        <input type="checkbox" class="tick" id="CompensationandBenefits" value="6" name="section"
+                            onchange="toggleInputs('input6'); updateCheckedSections();">
                         <label for="CompensationandBenefits" class="special-button">Compensation and Benefits</label>
                         <div class="input-container input6" style="display: none;">
-                            <input type="text" class="input6" placeholder="Enter Monthly Income">
-                            <input type="text" class="input6" placeholder="Enter percent Salary Hike">
-                            <input type="text" class="input6" placeholder="Enter Stock Option Level">
+                            <input type="text" class="input6" name="monthly_income" placeholder="Enter Monthly Income">
+                            <input type="text" class="input6" name="salary_hike"
+                                placeholder="Enter percent Salary Hike">
+                            <input type="text" class="input6" name="stock_option_level"
+                                placeholder="Enter Stock Option Level">
                         </div>
                     </section>
-
+                    <!-- Hidden input to pass checked sections -->
+                    <input type="hidden" id="checkedSections" name="checked_sections">
                     <! Button to submit entries of the page -->
-                        <button onclick="ok(event   )" class="submit_button">Predict</button>
+                        <button type="submit" class="submit_button">Predict</button>
+
                         <script type="text/javascript" src="../static/script.js"></script>
         </form>
 </body>

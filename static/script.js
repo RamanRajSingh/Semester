@@ -89,7 +89,15 @@ function ok(event) {
             alert("An error occurred during submission!");
         });
 };
-
+function updateCheckedSections() {
+    let checked = [];
+    document.querySelectorAll('input[name="section"]:checked').forEach(cb => {
+        checked.push(cb.value);
+    });
+    document.getElementById('checkedSections').value = checked.join('_');
+}
+// Optional: update immediately on page load if needed
+window.onload = updateCheckedSections;
 
 // Send data to Flask
 fetch('/index', {
