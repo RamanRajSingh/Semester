@@ -7,6 +7,18 @@ import joblib
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
+# Cache recently loaded models using a dictionary 
+loaded_models = {}
+
+def load_model(model_path):
+    if model_path in loaded_models:
+        return loaded_models[model_path]
+    with open(model_path, 'rb') as f:
+        model = pickle.load(f)
+
+    loaded_models[model_path] = model
+    return model
+
 # MySQL Connection
 def create_connection():
     return mysql.connector.connect(
@@ -43,39 +55,33 @@ def predict():
         return render_template('result.html', prediction=prediction)
 
     except Exception as e:
-        print(f"❌ Error while preparing features: {e}")
+        print(f"❌ Error while preparing pfeatures: {e}")
         return "There was an error processing your input data."
 
 
 def preprocess_input(form):
-    # Combined mappings
-    mapping = {
-        "gender": {"male": 0, "female": 1},
-        "marital_status": {"single": 0, "married": 1, "divorced": 2},
-        "education": {
-            "8th pass": 1, "intermediate": 2, "graduate": 3,
-            "bachelor": 3, "post graduate": 4, "master": 4,
-            "phd": 5, "doctor": 5
-        },
-        "education_field": {
-            "life sciences": 0, "medical": 1, "marketing": 2,
-            "technical degree": 3, "other": 4
-        },
-        "business_travel": {
-            "non-travel": 0, "travel rarely": 1, "travel frequently": 2
-        },
-        "overtime": {"no": 0, "yes": 1},
-        "job_role": {
-            "sales executive": 0, "research scientist": 1, "laboratory technician": 2,
-            "manufacturing director": 3, "healthcare representative": 4,
-            "manager": 5, "sales representative": 6,
-            "research director": 7, "human resources": 8
-        },
-        "department": {
-            "sales": 0, "research & development": 1, "human resources": 2
-        }
+    # Mappings for categorical fields
+    gender_mapping = {'male': 1, 'female': 0}
+    marital_status_mapping = {'single': 0, 'married': 1, 'divorced': 2}
+    education_mapping = {
+        "8th pass": 1, "intermediate": 2, "graduate": 3, "bachelor": 3,
+        "post graduate": 4, "master": 4, "phd": 5, "doctor": 5
+    }
+    overtime_mapping = {'yes': 1, 'no': 0}
+    business_travel_mapping = {
+        'non-travel': 0, 'travel_rarely': 1, 'travel_frequently': 2
     }
 
+    # Mapping dictionary for unified access
+    mapping = {
+        'gender': gender_mapping,
+        'marital_status': marital_status_mapping,
+        'education': education_mapping,
+        'overtime': overtime_mapping,
+        'business_travel': business_travel_mapping
+    }
+
+    # Fields expected to be numeric directly
     numeric_fields = [
         "employee_number", "employee_age", "total_working_years",
         "companies_worked", "performance_rating", "training_times_last_year",
@@ -88,23 +94,36 @@ def preprocess_input(form):
 
     processed = []
 
+
+    # Loop through each form field
+
     for field in form:
-        clean_field = field.strip().lower()
-        val = form[field].strip().lower() if isinstance(form[field], str) else form[field]
+        clean_field = field.strip().lower()  # Normalize field name
+        val = form[field]  # Get the value for the field
+        val_str = val.strip().lower() if isinstance(val, str) else val  # Normalize string values
+
+        # Handle categorical fields
 
         if clean_field in mapping:
-            processed.append(mapping[clean_field].get(val, 0))
+            processed.append(mapping[clean_field].get(val_str, 0))  # Default to 0 if not found
+
+        # Handle numeric fields
+
         elif clean_field in numeric_fields:
+
             try:
-                processed.append(int(val))
+
+                processed.append(int(val))  # Convert to integer
+
             except:
-                processed.append(0)
+
+                processed.append(0)  # In case of error, append 0
+
         else:
-            processed.append(0)
+
+            processed.append(0)  # Default case if the field doesn't match
 
     return processed
-
-
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -150,6 +169,7 @@ def index():
 
             # 2. Define encoding maps
             bt_map = {'Non-Travel': 0, 'Travel_Frequently': 1, 'Travel_Rarely': 2}
+            e_map = {"8th pass": 1, "intermediate": 2, "graduate": 3, "bachelor": 3,"post graduate": 4, "master": 4, "phd": 5, "doctor": 5}
             ef_map = {'Life Sciences': 0, 'Medical': 1, 'Marketing': 2, 'Technical Degree': 3, 'Human Resources': 4}
             gender_map = {'Male': 0, 'Female': 1}
             ms_map = {'Single': 0, 'Married': 1, 'Divorced': 2}
@@ -161,7 +181,7 @@ def index():
                     int(form_data.get('employee_age', 0)),
                     bt_map.get(form_data.get('business_travel', 'Non-Travel'), 0),
                     int(form_data.get('distance_from_home', 0)),
-                    int(form_data.get('education', 0)),
+                    e_map.get(form_data.get('education', 'graduate'), 0),
                     ef_map.get(form_data.get('education_field', 'Life Sciences'), 0),
                     int(form_data.get('employee_number', 0)),
                     gender_map.get(form_data.get('gender', 'Male'), 0),
@@ -199,15 +219,16 @@ def index():
                 form_data.get('years_at_company'),
                 form_data.get('years_in_role'),
                 form_data.get('years_with_manager'),
-                form_data.get('Years Since Last Promotion'),
-                form_data.get('WorkLifeBalance'),
-                form_data.get('Job Satisfaction'),
-                form_data.get('Environment Satisfaction'),
-                form_data.get('Relationship Satisfaction'),
-                form_data.get('Monthly Income'),
-                form_data.get('percent Salary Hike'),
-                form_data.get('Stock Option Level')
+                form_data.get('years_since_last_promotion'),  
+                form_data.get('work_life_balance'),            
+                form_data.get('job_satisfaction'),             
+                form_data.get('environment_satisfaction'),     
+                form_data.get('relationship_satisfaction'),    
+                form_data.get('monthly_income'),
+                form_data.get('salary_hike'),
+                form_data.get('stock_option_level')
             ]
+
             # Insert into SQL
             insert_query = """
                 INSERT INTO employee_data (
@@ -241,43 +262,27 @@ def index():
             cursor.execute("SELECT * FROM employee_data ORDER BY employee_number DESC LIMIT 1")
             data = cursor.fetchone()
             print("Form values:", request.form)
-            features = preprocess_input(data)
-            selected_sections = data.get("selected_sections", "1_2_3")
-            # Detect selected sections
-            section_1_2_3 = ['employee_age','business_travel','distance_from_home','education','education_field','employee_number','gender','marital_status','companies_worked','overtime','performance_rating','total_working_years','training_times_last_year']
-            section_4 = ['department','job_involvement','job_level','job_role']
-            section_5 = ['environment_satisfaction','job_satisfaction','relationship_satisfaction','work_life_balance']
-            section_6 = ['monthly_income','salary_hike','stock_option_level','years_at_company','years_in_role','years_since_last_promotion','years_with_manager']
+           # Define section-wise columns (ONLY ONCE)
+            section_1_2_3 = [
+                'employee_age', 'business_travel', 'distance_from_home', 'education',
+                'education_field', 'employee_number', 'gender', 'marital_status',
+                'companies_worked', 'overtime', 'performance_rating',
+                'total_working_years', 'training_times_last_year'
+            ]
 
-            selected_sections = data.get("selected_sections", "1_2_3")
+            section_4 = ['department', 'job_involvement', 'job_level', 'job_role']
+            section_5 = ['environment_satisfaction', 'job_satisfaction', 'relationship_satisfaction', 'work_life_balance']
+            section_6 = ['monthly_income', 'salary_hike', 'stock_option_level',
+                        'years_at_company', 'years_in_role', 'years_since_last_promotion', 'years_with_manager']
+
+            # Get selected model version
+            selected_sections = request.form.get("checked_sections", "1_2_3")
             model_path = f"models/model_{selected_sections}.pkl"
-            
-            # ✅ Your line goes here
+
+            # Load model
             dynamic_model = joblib.load(model_path)
 
-            # Get columns used in each section
-            section_1_2_3 = ['employee_age','business_travel','distance_from_home','education','education_field','employee_number','gender','marital_status','companies_worked','overtime','performance_rating','total_working_years','training_times_last_year']
-            section_4 = ['department','job_involvement','job_level','job_role']
-            section_5 = ['environment_satisfaction','job_satisfaction','relationship_satisfaction','work_life_balance']
-            section_6 = ['monthly_income','salary_hike','stock_option_level','years_at_company','years_in_role','years_since_last_promotion','years_with_manager']
-
-            selected = ['1', '2', '3']
 # --- Encoding the Fields ---
-            features = [
-                int(data['Age']),
-                bt_map.get(data['BusinessTravel'].lower(), 0),
-                int(data['DistanceFromHome']),
-                int(data['Education']),
-                ef_map.get(data['EducationField'].lower(), 0),
-                int(data['EmployeeNumber']),
-                gender_map.get(data['Gender'].lower(), 0),
-                ms_map.get(data['MaritalStatus'].lower(), 0),
-                int(data['NumCompaniesWorked']),
-                ot_map.get(data['OverTime'].lower(), 0),
-                int(data['PerformanceRating']),
-                int(data['TotalWorkingYears']),
-                int(data['TrainingTimesLastYear'])
-            ]
 
             columns = section_1_2_3[:]
 
@@ -291,12 +296,13 @@ def index():
                 val = data[cursor.column_names.index(col)]
                 features.append(int(val) if val is not None else 0)
 
-            selected_sections = request.form.get('checked_sections') # 🧠 TRACKED SECTION VALUES
-            model_key = selected_sections
-            model_filename = f'models/model_{model_key}.pkl'
+            selected_sections = request.form.get('checked_sections', "").strip()# 🧠 TRACKED SECTION VALUES
+            if not selected_sections:
+                selected_sections = '1_2_3'  # Or any default section if not selected 
+            model_filename = f'models/model_{selected_sections}.pkl'
 
             with open(model_filename, 'rb') as f:
-                model = pickle.load(f)
+                model = load_model(model_filename)
             model_input = [float(val) if val not in [None, '', 'NULL'] else 0 for val in values[:13]]  # Only 1_2_3 fields used
 
 
@@ -331,19 +337,6 @@ def index():
 
 
     return render_template('index.html')
-
-# Cache recently loaded models using a dictionary 
-loaded_models = {}
-
-def load_model(model_path):
-    if model_path in loaded_models:
-        return loaded_models[model_path]
-    with open(model_path, 'rb') as f:
-        model = pickle.load(f)
-
-    loaded_models[model_path] = model
-    return model
-
 
 # Run Server
 if __name__ == '__main__':
