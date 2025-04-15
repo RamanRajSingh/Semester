@@ -166,12 +166,22 @@ def index():
             form_data = request.form.to_dict(flat=True)
 
             # 2. Define encoding maps
-            bt_map = {'Non-Travel': 0, 'Travel_Frequently': 1, 'Travel_Rarely': 2}
+            bt_map = {
+    'non-travel': 0,
+    'travel_rarely': 1,
+    'travel_frequently': 2
+}
             e_map = {"8th pass": 1, "intermediate": 2, "graduate": 3, "bachelor": 3,"post graduate": 4, "master": 4, "phd": 5, "doctor": 5}
-            ef_map = {'life sciences': 0, 'Medical': 1, 'Marketing': 2, 'Technical Degree': 3, 'Human Resources': 4}
-            gender_map = {'Male': 0, 'Female': 1}
-            ms_map = {'Single': 0, 'Married': 1, 'Divorced': 2}
-            ot_map = {'No': 0, 'Yes': 1}
+            ef_map = {
+    'life sciences': 0,
+    'medical': 1,
+    'marketing': 2,
+    'technical degree': 3,
+    'human resources': 4
+}
+            gender_map = {'male': 0, 'female': 1}
+            ms_map = {'single': 0, 'married': 1, 'divorced': 2}
+            ot_map = {'no': 0, 'yes': 1}
 
             # 3. Extract and encode inputs
             try:
