@@ -3,6 +3,7 @@ import mysql.connector
 from mysql.connector import Error
 import pickle
 import joblib
+import traceback
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -27,10 +28,7 @@ def create_connection():
         password="Raman@20",
         database="employee_db"
     )
-# Function to get model name from selected sections
-def get_model_name_from_sections(sections_str):
-    # Example input: '1_2_3_4'
-    return f"models/model_{sections_str}.pkl"
+
 # Route: Login Page
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -170,7 +168,7 @@ def index():
             # 2. Define encoding maps
             bt_map = {'Non-Travel': 0, 'Travel_Frequently': 1, 'Travel_Rarely': 2}
             e_map = {"8th pass": 1, "intermediate": 2, "graduate": 3, "bachelor": 3,"post graduate": 4, "master": 4, "phd": 5, "doctor": 5}
-            ef_map = {'Life Sciences': 0, 'Medical': 1, 'Marketing': 2, 'Technical Degree': 3, 'Human Resources': 4}
+            ef_map = {'life sciences': 0, 'Medical': 1, 'Marketing': 2, 'Technical Degree': 3, 'Human Resources': 4}
             gender_map = {'Male': 0, 'Female': 1}
             ms_map = {'Single': 0, 'Married': 1, 'Divorced': 2}
             ot_map = {'No': 0, 'Yes': 1}
@@ -259,7 +257,19 @@ def index():
 
             # --- Prediction Logic Starts ---
             # Fetch most recent data
-            cursor.execute("SELECT * FROM employee_data ORDER BY employee_number DESC LIMIT 1")
+            cursor.execute('''SELECT employee_number,
+    employee_age,
+    gender,
+    marital_status,
+    education,
+    education_field,
+    total_working_years,
+    companies_worked,
+    performance_rating,
+    training_times_last_year,
+    distance_from_home,
+    overtime,
+    business_travel FROM employee_data ORDER BY employee_number DESC LIMIT 1''')
             data = cursor.fetchone()
             print("Form values:", request.form)
            # Define section-wise columns (ONLY ONCE)
@@ -275,54 +285,41 @@ def index():
             section_6 = ['monthly_income', 'salary_hike', 'stock_option_level',
                         'years_at_company', 'years_in_role', 'years_since_last_promotion', 'years_with_manager']
 
-            # Get selected model version
-            selected_sections = request.form.get("checked_sections", "1_2_3")
-            model_path = f"models/model_{selected_sections}.pkl"
-
-            # Load model
-            dynamic_model = joblib.load(model_path)
+            
 
 # --- Encoding the Fields ---
-
-            columns = section_1_2_3[:]
+            selected = []
+            columns = section_1_2_3[:]  # base fields
 
             for i, section in enumerate([section_4, section_5, section_6], start=4):
-                if any(data[col] not in [None, '', 'None'] for col in section):
+                if any(data.get(col) not in [None, '', 'None'] for col in section):  # ✅ safe access
                     selected.append(str(i))
                     columns.extend(section)
 
-            # Build features
-            for col in columns:
-                val = data[cursor.column_names.index(col)]
-                features.append(int(val) if val is not None else 0)
+            
+            
 
-            selected_sections = request.form.get('checked_sections', "").strip()# 🧠 TRACKED SECTION VALUES
+            selected_sections = request.form.get('checked_sections', "").strip()
             if not selected_sections:
-                selected_sections = '1_2_3'  # Or any default section if not selected 
+                selected_sections = '1_2_3'
+
             model_filename = f'models/model_{selected_sections}.pkl'
 
-            with open(model_filename, 'rb') as f:
-                model = load_model(model_filename)
-            model_input = [float(val) if val not in [None, '', 'NULL'] else 0 for val in values[:13]]  # Only 1_2_3 fields used
-
-
             try:
-                dynamic_model = joblib.load(model_path)
+                dynamic_model = joblib.load(model_filename)
             except FileNotFoundError:
                 return render_template('index.html', prediction_text='Model file not found!')
 
             features = preprocess_input(data)
-            prediction = dynamic_model.predict([features])
+            prediction_result = "No" if dynamic_model.predict([features])[0] == 1 else "Yes"
 
-            flash(f"Prediction: {'Yes' if prediction == 1 else 'No'}")
-            print("Form data received =>", request.form)
+            return render_template("result.html", prediction=prediction_result)
+
 
         except Exception as e:
             print("Database Error:", e)
-            if conn:
-                conn.rollback()
-                flash(f"Error: {e}")
-                print("Error during DB insert:", e)
+            traceback.print_exc()  # 🧠 Shows the full stack trace
+
 
         finally:
             if cursor:
