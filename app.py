@@ -290,10 +290,9 @@ def index():
                 'total_working_years', 'training_times_last_year'
             ]
 
-            section_4 = ['department', 'job_involvement', 'job_level', 'job_role']
+            section_4 = ['department', 'job_involvement', 'job_level', 'job_role','years_at_company', 'years_in_role', 'years_since_last_promotion', 'years_with_manager']
             section_5 = ['environment_satisfaction', 'job_satisfaction', 'relationship_satisfaction', 'work_life_balance']
-            section_6 = ['monthly_income', 'salary_hike', 'stock_option_level',
-                        'years_at_company', 'years_in_role', 'years_since_last_promotion', 'years_with_manager']
+            section_6 = ['monthly_income', 'salary_hike', 'stock_option_level',]
 
             
 
@@ -314,7 +313,7 @@ def index():
                 selected_sections = '1_2_3'
 
             model_filename = f'models/model_{selected_sections}.pkl'
-
+            print("Model Filename:", model_filename)
             try:
                 dynamic_model = joblib.load(model_filename)
             except FileNotFoundError:
