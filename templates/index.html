@@ -25,9 +25,30 @@
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                         </select>
-                        <input type="text" name="marital_status" class="input1" placeholder="Enter Marital Status">
-                        <input type="text" name="education" class="input1" placeholder="Enter Education">
-                        <input type="text" name="education_field" class="input1" placeholder="Enter Education field">
+                        <select name="marital_status" class="input1">
+                            <option value="" class="input1">Select marital status</option>
+                            <option value="single">Single</option>
+                            <option value="married">Married</option>
+                            <option value="divorced">Divorced</option>
+                        </select>
+                        <select name="education" class="input1">
+                            <option value="">Select Education</option>
+                            <option value="matric">10th passed / Matric</option>
+                            <option value="intermediate">12th passed / Intermediate</option>
+                            <option value="bachelor">Graduate</option>
+                            <option value="master">Post graduate</option>
+                            <option value="doctorate">Doctorate(Ph.D)</option>
+                        </select>
+                        <select name="education_field" class="input1">
+                            <option value="" class="input1">Select education field</option>
+                            <option value="life sciences" class="input1">Life sciences</option>
+                            <option value="medical" class="input1">Medical</option>
+                            <option value="marketing" class="input1">Marketing</option>
+                            <option value="technical degree" class="input1">Technical degree</option>
+                            <option value="human resources" class="input1">Human resources</option>
+                        </select>
+
+
                     </div>
                 </section>
                 <section class="second">
@@ -49,8 +70,19 @@
                     <div class="input-container input3">
                         <input type="text" name="distance_from_home" class="input3"
                             placeholder="Enter Distance From Home">
-                        <input type="text" name="overtime" class="input3" placeholder="Enter OverTime">
-                        <input type="text" name="business_travel" class="input3" placeholder="Enter Business Travel">
+                        <select name="overtime" class="input3">
+                            <option value="" class="input3">Select overtime</option>
+                            <option value="yes" class="input3">Yes</option>
+                            <option value="no" class="input3">No</option>
+                        </select>
+
+                        <select name="business_travel" class="input3">
+                            <option value="" class="input3">Select business travel</option>
+                            <option value="non-travel" class="input3">Non-travel</option>
+                            <option value="travel_frequently" class="input3">Travel frequently</option>
+                            <option value="travel_rarely" class="input3">Travel rarely</option>
+                        </select>
+
                     </div>
                 </section>
 
@@ -60,11 +92,43 @@
                             onchange="toggleInputs('input4'); updateCheckedSections();">
                         <label for="jobCareerCheckbox" class="special-button">Job and Career-related Factors</label>
                         <div class="input-container input4" style="display: none;">
-                            <input type="text" class="input4" name="job_role" placeholder="Enter Job Role">
-                            <input type="text" class="input4" name="job_level" placeholder="Enter Job Level">
-                            <input type="text" class="input4" name="job_involvement"
-                                placeholder="Enter Job Involvement">
-                            <input type="text" class="input4" name="department" placeholder="Department">
+                            <select name="job_role" class="input4">
+                                <option value="" class="input1">Select job role</option>
+                                <option value="sales executive" class="input4">Sales executive</option>
+                                <option value="research scientist" class="input4">Research scientist</option>
+                                <option value="laboratory technician" class="input4">Laboratory technician</option>
+                                <option value="manufacturing director" class="input4">Manufacturing director</option>
+                                <option value="healthcare representative" class="input4">Healthcare representative
+                                </option>
+                                <option value="manager" class="input4">Manager</option>
+                                <option value="sales representative" class="input4">Sales representative</option>
+                                <option value="research director" class="input4">Research director</option>
+                                <option value="human resources" class="input4">Human resources</option>
+                            </select>
+                            <select name="job_level" class="input4">
+                                <option value="">Select job level</option>
+                                <option value="1">Entry Level</option>
+                                <option value="2">Junior Level</option>
+                                <option value="3">Mid Level</option>
+                                <option value="4">Senior Level</option>
+                                <option value="5">Executive / Managerial</option>
+                            </select>
+
+                            <select name="job_involvement" class="input4">
+                                <option value="">Select job involvement level</option>
+                                <option value="1">Low</option>
+                                <option value="2">Medium</option>
+                                <option value="3">High</option>
+                                <option value="4">Very High</option>
+                            </select>
+
+                            <select type="text" class="input4" name="department">
+                                <option value="" class="input1">Select department</option>
+                                <option value="sales" class="input4">Sales</option>
+                                <option value="research & development" class="input4">Research & Development</option>
+                                <option value="human resources" class="input4">Human Resources</option>
+                            </select>
+
                             <input type="text" class="input4" name="years_at_company" placeholder="Years at Company">
                             <input type="text" class="input4" name="years_in_role" placeholder="Years in Current Role">
                             <input type="text" class="input4" name="years_with_manager"
@@ -80,13 +144,37 @@
                         <label for="WorkEnvironmentandSatisfaction" class="special-button">Work Environment and
                             Satisfaction</label>
                         <div class="input-container input5" style="display: none;">
-                            <input type="text" class="input5" name="work_life_balance" placeholder="WorkLifeBalance">
-                            <input type="text" class="input5" name="job_satisfaction"
-                                placeholder="Enter Job Satisfaction">
-                            <input type="text" class="input5" name="environment_satisfaction"
-                                placeholder="Enter Environment Satisfaction">
-                            <input type="text" class="input5" name="relationship_satisfaction"
-                                placeholder="Enter Relationship Satisfaction">
+                            <select name="work_life_balance" class="input5">
+                                <option value="">Select Work-Life Balance</option>
+                                <option value="1">Poor</option>
+                                <option value="2">Average</option>
+                                <option value="3">Good</option>
+                                <option value="4">Excellent</option>
+                            </select>
+                            <select name="job_satisfaction" class="input5">
+                                <option value="">Select Job Satisfaction</option>
+                                <option value="1">Very Dissatisfied</option>
+                                <option value="2">Dissatisfied</option>
+                                <option value="3">Satisfied</option>
+                                <option value="4">Very Satisfied</option>
+                            </select>
+
+                            <select name="environment_satisfaction" class="input5">
+                                <option value="">Select Environment Satisfaction</option>
+                                <option value="1">Poor</option>
+                                <option value="2">Fair</option>
+                                <option value="3">Good</option>
+                                <option value="4">Excellent</option>
+                            </select>
+
+                            <select name="relationship_satisfaction" class="input5">
+                                <option value="">Select Relationship Satisfaction</option>
+                                <option value="1">Poor</option>
+                                <option value="2">Average</option>
+                                <option value="3">Good</option>
+                                <option value="4">Excellent</option>
+                            </select>
+
                         </div>
                     </section>
                     <section class="sixth">

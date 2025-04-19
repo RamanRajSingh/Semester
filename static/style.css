@@ -114,19 +114,6 @@
     }
 }
 
-.special-button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #0000005c;
-    color: white;
-    cursor: pointer;
-    border-radius: 8px;
-    display: inline-block;
-    backdrop-filter: blur(100px);
-    font-size: 30px;
-    font-family: rrs;
-    width: 90%;
-}
 
 .tick:hover {
     cursor: pointer;
@@ -275,6 +262,23 @@
 .submit_button:hover {
     cursor: pointer;
 }
+
+/*General styles that are used commonly by the required tags*/
+.special-button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #0000005c;
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
+    display: inline-block;
+    backdrop-filter: blur(100px);
+    font-size: 30px;
+    font-family: rrs;
+    width: 90%;
+}
+
+
 
 /** for prediction or result page */
 .result {

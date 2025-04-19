@@ -62,21 +62,46 @@ def preprocess_input(form):
     gender_mapping = {'male': 1, 'female': 0}
     marital_status_mapping = {'single': 0, 'married': 1, 'divorced': 2}
     education_mapping = {
-        "8th pass": 1, "intermediate": 2, "graduate": 3, "bachelor": 3,
-        "post graduate": 4, "master": 4, "phd": 5, "doctor": 5
+        "matric": 1, "intermediate": 2, "graduate": 3, "bachelor": 3,
+        "post_graduate": 4, "master": 4, "phd": 5, "doctorate": 5
     }
     overtime_mapping = {'yes': 1, 'no': 0}
     business_travel_mapping = {
         'non-travel': 0, 'travel_rarely': 1, 'travel_frequently': 2
     }
-
+    job_role_mapping= {
+        'Sales Executive': 0,
+        'Research Scientist': 1,
+        'Laboratory Technician': 2,
+        'Manufacturing Director': 3,
+        'Healthcare Representative': 4,
+        'Manager': 5,
+        'Sales Representative': 6,
+        'Research Director': 7,
+        'Human Resources': 8
+    },
+    department_mapping={
+        'Sales': 0,
+        'Research & Development': 1,
+        'Human Resources': 2
+    },
+    Education_field_mappping={
+        'life Sciences': 0,
+        'medical': 1,
+        'marketing': 2,
+        'technical degree': 3,
+        'human resources': 4
+    }
     # Mapping dictionary for unified access
     mapping = {
         'gender': gender_mapping,
         'marital_status': marital_status_mapping,
         'education': education_mapping,
         'overtime': overtime_mapping,
-        'business_travel': business_travel_mapping
+        'business_travel': business_travel_mapping,
+        'job_role': job_role_mapping,
+        'department': department_mapping,
+        'education_field': Education_field_mappping
     }
 
     # Fields expected to be numeric directly
@@ -309,10 +334,8 @@ def index():
             
 
             selected_sections = request.form.get('checked_sections', "").strip()
-            if not selected_sections:
-                selected_sections = '1_2_3'
-
-            model_filename = f'models/model_{selected_sections}.pkl'
+            
+            model_filename = f'models/model_1_2_3_{selected_sections}.pkl'
             print("Model Filename:", model_filename)
             try:
                 dynamic_model = joblib.load(model_filename)
