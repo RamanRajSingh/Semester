@@ -79,12 +79,12 @@ def preprocess_input(form):
         'Sales Representative': 6,
         'Research Director': 7,
         'Human Resources': 8
-    },
+    }
     department_mapping={
         'Sales': 0,
         'Research & Development': 1,
         'Human Resources': 2
-    },
+    }
     Education_field_mappping={
         'life Sciences': 0,
         'medical': 1,
@@ -147,6 +147,12 @@ def preprocess_input(form):
             processed.append(0)  # Default case if the field doesn't match
 
     return processed
+ # Helper: sanitize and cast inputs
+def sanitize(value, cast_type=int):
+    try:
+        return cast_type(value) if value not in [None, '', 'None'] else None
+    except:
+        return None
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -156,159 +162,99 @@ def index():
             conn = create_connection()
             cursor = conn.cursor(dictionary=True)
 
-            # Collect all form fields (essential + optional)
-            data = {
-                'employee_number': request.form.get('employee_number'),
-                'employee_age': request.form.get('employee_age'),
-                'gender': request.form.get('gender'),
-                'marital_status': request.form.get('marital_status'),
-                'education': request.form.get('education'),
-                'education_field': request.form.get('education_field'),
-                'total_working_years': request.form.get('total_working_years'),
-                'companies_worked': request.form.get('companies_worked'),
-                'performance_rating': request.form.get('performance_rating'),
-                'training_times_last_year': request.form.get('training_times_last_year'),
-                'distance_from_home': request.form.get('distance_from_home'),
-                'overtime': request.form.get('overtime'),
-                'business_travel': request.form.get('business_travel'),
-                'job_role': request.form.get('job_role') or None,
-                'job_level': request.form.get('job_level') or None,
-                'job_involvement': request.form.get('job_involvement') or None,
-                'department': request.form.get('department') or None,
-                'years_at_company': request.form.get('years_at_company') or None,
-                'years_in_role': request.form.get('years_in_role') or None,
-                'years_with_manager': request.form.get('years_with_manager') or None,
-                'years_since_last_promotion': request.form.get('years_since_last_promotion') or None,
-                'work_life_balance': request.form.get('work_life_balance') or None,
-                'job_satisfaction': request.form.get('job_satisfaction') or None,
-                'environment_satisfaction': request.form.get('environment_satisfaction') or None,
-                'relationship_satisfaction': request.form.get('relationship_satisfaction') or None,
-                'monthly_income': request.form.get('monthly_income') or None,
-                'salary_hike': request.form.get('salary_hike') or None,
-                'stock_option_level': request.form.get('stock_option_level') or None,
-            }
-            # 1. Collect form data# 1. Retrieve all form data
-            form_data = request.form.to_dict(flat=True)
+   
 
-            # 2. Define encoding maps
-            bt_map = {
-    'non-travel': 0,
-    'travel_rarely': 1,
-    'travel_frequently': 2
-}
-            e_map = {"8th pass": 1, "intermediate": 2, "graduate": 3, "bachelor": 3,"post graduate": 4, "master": 4, "phd": 5, "doctor": 5}
-            ef_map = {
-    'life sciences': 0,
-    'medical': 1,
-    'marketing': 2,
-    'technical degree': 3,
-    'human resources': 4
-}
+            # 1. Retrieve all form data
+            form_data = request.form.to_dict(flat=True)
+            print("🔥 Form Data Received:", form_data)
+
+            # 2. Mapping for encoding categorical values
+            bt_map = {'non-travel': 0, 'travel_rarely': 1, 'travel_frequently': 2}
+            e_map = {"8th pass": 1, "intermediate": 2, "graduate": 3, "bachelor": 3, "post graduate": 4, "master": 4, "phd": 5, "doctor": 5}
+            ef_map = {'life sciences': 0, 'medical': 1, 'marketing': 2, 'technical degree': 3, 'human resources': 4}
             gender_map = {'male': 0, 'female': 1}
             ms_map = {'single': 0, 'married': 1, 'divorced': 2}
             ot_map = {'no': 0, 'yes': 1}
 
-            # 3. Extract and encode inputs
+            # 3. Feature encoding for ML
             try:
                 features = [
-                    int(form_data.get('employee_age', 0)),
-                    bt_map.get(form_data.get('business_travel', 'Non-Travel'), 0),
-                    int(form_data.get('distance_from_home', 0)),
-                    e_map.get(form_data.get('education', 'graduate'), 0),
-                    ef_map.get(form_data.get('education_field', 'Life Sciences'), 0),
-                    int(form_data.get('employee_number', 0)),
-                    gender_map.get(form_data.get('gender', 'Male'), 0),
-                    ms_map.get(form_data.get('marital_status', 'Single'), 0),
-                    int(form_data.get('companies_worked', 0)),
-                    ot_map.get(form_data.get('overtime', 'No'), 0),
-                    int(form_data.get('performance_rating', 0)),
-                    int(form_data.get('total_working_years', 0)),
-                    int(form_data.get('training_times_last_year', 0))
+                    sanitize(form_data.get('employee_age')),
+                    bt_map.get(form_data.get('business_travel', 'non-travel').lower(), 0),
+                    sanitize(form_data.get('distance_from_home')),
+                    e_map.get(form_data.get('education', 'graduate').lower(), 3),
+                    ef_map.get(form_data.get('education_field', 'life sciences').lower(), 0),
+                    sanitize(form_data.get('employee_number')),
+                    gender_map.get(form_data.get('gender', 'male').lower(), 0),
+                    ms_map.get(form_data.get('marital_status', 'single').lower(), 0),
+                    sanitize(form_data.get('companies_worked')),
+                    ot_map.get(form_data.get('overtime', 'no').lower(), 0),
+                    sanitize(form_data.get('performance_rating')),
+                    sanitize(form_data.get('total_working_years')),
+                    sanitize(form_data.get('training_times_last_year'))
                 ]
             except Exception as e:
                 print("❌ Error while preparing features:", e)
                 return render_template("index.html", error="Invalid input format!")
-            print("🔥 Form Data Received:", form_data)
 
-            # 2. Extract values (you can do validation here)
+            # 4. SQL INSERT values (sanitize all)
             values = [
-                form_data.get('employee_number'),
-                form_data.get('employee_age'),
-                form_data.get('gender'),
-                form_data.get('marital_status'),
-                form_data.get('education'),
-                form_data.get('education_field'),
-                form_data.get('total_working_years'),
-                form_data.get('companies_worked'),
-                form_data.get('performance_rating'),
-                form_data.get('training_times_last_year'),
-                form_data.get('distance_from_home'),
-                form_data.get('overtime'),
-                form_data.get('business_travel'),
-                form_data.get('job_role'),
-                form_data.get('job_level'),
-                form_data.get('job_involvement'),
-                form_data.get('department'),
-                form_data.get('years_at_company'),
-                form_data.get('years_in_role'),
-                form_data.get('years_with_manager'),
-                form_data.get('years_since_last_promotion'),  
-                form_data.get('work_life_balance'),            
-                form_data.get('job_satisfaction'),             
-                form_data.get('environment_satisfaction'),     
-                form_data.get('relationship_satisfaction'),    
-                form_data.get('monthly_income'),
-                form_data.get('salary_hike'),
-                form_data.get('stock_option_level')
+                sanitize(form_data.get('employee_age')),                         # age
+                form_data.get('business_travel'),                                # business_travel
+                form_data.get('department'),                                     # department
+                sanitize(form_data.get('distance_from_home')),                   # distance_from_home
+                form_data.get('education'),                                      # education
+                form_data.get('education_field'),                                # education_field
+                sanitize(form_data.get('employee_number')),                      # employee_number (PRIMARY)
+                sanitize(form_data.get('environment_satisfaction')),             # environment_satisfaction
+                form_data.get('gender'),                                         # gender
+                sanitize(form_data.get('job_involvement')),                      # job_involvement
+                sanitize(form_data.get('job_level')),                            # job_level
+                form_data.get('job_role'),                                       # job_role
+                sanitize(form_data.get('job_satisfaction')),                     # job_satisfaction
+                form_data.get('marital_status'),                                 # marital_status
+                sanitize(form_data.get('monthly_income')),                       # monthly_income
+                sanitize(form_data.get('companies_worked')),                     # num_companies_worked
+                form_data.get('overtime'),                                       # overtime
+                sanitize(form_data.get('salary_hike')),                          # percent_salary_hike
+                sanitize(form_data.get('performance_rating')),                   # performance_rating
+                sanitize(form_data.get('relationship_satisfaction')),            # relationship_satisfaction
+                sanitize(form_data.get('stock_option_level')),                   # stock_option_level
+                sanitize(form_data.get('total_working_years')),                  # total_working_years
+                sanitize(form_data.get('training_times_last_year')),            # training_times_last_year
+                sanitize(form_data.get('work_life_balance')),                    # work_life_balance
+                sanitize(form_data.get('years_at_company')),                     # years_at_company
+                sanitize(form_data.get('years_in_current_role')),                # years_in_current_role
+                sanitize(form_data.get('years_since_last_promotion')),           # years_since_last_promotion
+                sanitize(form_data.get('years_with_curr_manager'))               # years_with_curr_manager
             ]
 
-            # Insert into SQL
+            # 5. Insert query
             insert_query = """
                 INSERT INTO employee_data (
-                    employee_number, employee_age, gender, marital_status, education, education_field,
-                    total_working_years, companies_worked, performance_rating, training_times_last_year,
-                    distance_from_home, overtime, business_travel,
-                    job_role, job_level, job_involvement, department, years_at_company, years_in_role, 
-                    years_with_manager, years_since_last_promotion,
-                    work_life_balance, job_satisfaction, environment_satisfaction, relationship_satisfaction,
-                    monthly_income, salary_hike, stock_option_level
+                    age, business_travel, department, distance_from_home,
+                    education, education_field, employee_number, environment_satisfaction, gender,
+                    job_involvement, job_level, job_role, job_satisfaction, marital_status,
+                    monthly_income, num_companies_worked, overtime, percent_salary_hike, performance_rating,
+                    relationship_satisfaction, stock_option_level, total_working_years, training_times_last_year,
+                    work_life_balance, years_at_company, years_in_current_role, years_since_last_promotion,
+                    years_with_curr_manager
                 ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
-            print("INSERTING DATA =>", data)
+            try:
+                cursor.execute(insert_query, values)
+                conn.commit()
+                print("✅ Data Inserted into DB Successfully!")
+            except Error as e:
+                print(f'❌ Error inserting data into database: {e}')
 
-            cursor.execute(insert_query, tuple(data.values()))
-            conn.commit()
-            for key, val in data.items():
-                if val in [None, '', 'None']:
-                    data[key] = None
-
-            print("Query Preview:")
-            print(insert_query)
-            print("Values:", tuple(data.values()))
-
-            print("==== DEBUG: Form Data Received ====")
+            """print("==== DEBUG: Form Data Received ====")
             for key in request.form:
-                print(f"{key} => {request.form.get(key)}")
+                print(f"{key} => {request.form.get(key)}")"""
 
             # --- Prediction Logic Starts ---
-            # Fetch most recent data
-            cursor.execute('''SELECT employee_number,
-    employee_age,
-    gender,
-    marital_status,
-    education,
-    education_field,
-    total_working_years,
-    companies_worked,
-    performance_rating,
-    training_times_last_year,
-    distance_from_home,
-    overtime,
-    business_travel FROM employee_data ORDER BY employee_number DESC LIMIT 1''')
-            data = cursor.fetchone()
-            print("Form values:", request.form)
-           # Define section-wise columns (ONLY ONCE)
-            section_1_2_3 = [
+            # Define section-wise columns (ONLY ONCE)
+            '''section_1_2_3 = [
                 'employee_age', 'business_travel', 'distance_from_home', 'education',
                 'education_field', 'employee_number', 'gender', 'marital_status',
                 'companies_worked', 'overtime', 'performance_rating',
@@ -318,7 +264,6 @@ def index():
             section_4 = ['department', 'job_involvement', 'job_level', 'job_role','years_at_company', 'years_in_role', 'years_since_last_promotion', 'years_with_manager']
             section_5 = ['environment_satisfaction', 'job_satisfaction', 'relationship_satisfaction', 'work_life_balance']
             section_6 = ['monthly_income', 'salary_hike', 'stock_option_level',]
-
             
 
 # --- Encoding the Fields ---
@@ -329,13 +274,223 @@ def index():
                 if any(data.get(col) not in [None, '', 'None'] for col in section):  # ✅ safe access
                     selected.append(str(i))
                     columns.extend(section)
-
-            
-            
-
+'''
             selected_sections = request.form.get('checked_sections', "").strip()
+            print("checked_sections:", selected_sections)
+
+            # Fix condition to check for empty string or None properly
+            if not selected_sections:
+                selected_sections = "1_2_3"
+            else:
+                # Join user-selected sections with 1_2_3 always included
+                selected_sections = "1_2_3_" + "_".join(selected_sections.split(","))
+
+            model_filename = f"models/model_{selected_sections}.pkl"
+            print("✅ Model Filename:", model_filename)
+
             
-            model_filename = f'models/model_1_2_3_{selected_sections}.pkl'
+            
+            # Fetch most recent data
+            if model_filename == "models/model_1_2_3.pkl":
+                cursor.execute('''
+    SELECT 
+        employee_number,
+        age AS employee_age,
+        gender,
+        marital_status,
+        education,
+        education_field,
+        total_working_years,
+        num_companies_worked AS companies_worked,
+        performance_rating,
+        training_times_last_year,
+        distance_from_home,
+        overtime,
+        business_travel
+    FROM employee_data
+    ORDER BY employee_number DESC
+    LIMIT 1
+''')
+                data = cursor.fetchone()
+
+            elif model_filename == "models/model_1_2_3_4.pkl":
+                cursor.execute('''SELECT 
+    age,
+    business_travel,
+    department,
+    distance_from_home,
+    education,
+    education_field,
+    employee_number,
+    gender,
+    job_involvement,
+    job_level,
+    job_role,
+    marital_status,
+    num_companies_worked,
+    overtime,
+    performance_rating,
+    total_working_years,
+    training_times_last_year,
+    years_at_company,
+    years_in_current_role,
+    years_since_last_promotion,
+    years_with_curr_manager
+FROM employee_data
+ORDER BY employee_number DESC
+LIMIT 1;
+''')
+                data = cursor.fetchone()
+            elif model_filename == "models/model_1_2_3_5.pkl":
+                cursor.execute('''SELECT 
+    age,
+    business_travel,
+    distance_from_home,
+    education,
+    education_field,
+    employee_number,
+    environment_satisfaction,
+    gender,
+    job_satisfaction,
+    marital_status,
+    num_companies_worked,
+    overtime,
+    performance_rating,
+    relationship_satisfaction,
+    total_working_years,
+    training_times_last_year,
+    work_life_balance
+FROM employee_data
+ORDER BY employee_number DESC
+LIMIT 1;
+''')
+                data = cursor.fetchone()
+            elif model_filename == "models/model_1_2_3_6.pkl":
+                cursor.execute('''SELECT 
+    age,
+    business_travel,
+    distance_from_home,
+    education,
+    education_field,
+    employee_number,
+    gender,
+    marital_status,
+    monthly_income,
+    num_companies_worked,
+    overtime,
+    percent_salary_hike,
+    performance_rating,
+    stock_option_level,
+    total_working_years,
+    training_times_last_year
+FROM employee_data
+ORDER BY employee_number DESC
+LIMIT 1;
+''')
+                data = cursor.fetchone()
+            elif model_filename == "models/model_1_2_3_4_5.pkl":
+                cursor.execute('''SELECT 
+    age,
+    business_travel,
+    department,
+    distance_from_home,
+    education,
+    education_field,
+    employee_number,
+    environment_satisfaction,
+    gender,
+    job_involvement,
+    job_level,
+    job_role,
+    job_satisfaction,
+    marital_status,
+    num_companies_worked,
+    overtime,
+    performance_rating,
+    relationship_satisfaction,
+    total_working_years,
+    training_times_last_year,
+    work_life_balance,
+    years_at_company,
+    years_in_current_role,
+    years_since_last_promotion,
+    years_with_curr_manager
+FROM employee_data
+ORDER BY employee_number DESC
+LIMIT 1;
+''')
+                data = cursor.fetchone()
+            elif model_filename == "models/model_1_2_3_4_6.pkl":
+                cursor.execute('''SELECT
+    age,
+    business_travel,
+    department,
+    distance_from_home,
+    education,
+    education_field,
+    employee_number,
+    gender,
+    job_involvement,
+    job_level,
+    job_role,
+    marital_status,
+    monthly_income,
+    num_companies_worked,
+    overtime,
+    percent_salary_hike,
+    performance_rating,
+    stock_option_level,
+    total_working_years,
+    training_times_last_year,
+    years_at_company,
+    years_in_current_role,
+    years_since_last_promotion,
+    years_with_curr_manager
+FROM employee_data
+ORDER BY employee_number DESC
+LIMIT 1;
+''')
+                data = cursor.fetchone()
+            elif model_filename == "models/model_1_2_3_5_6.pkl":
+                cursor.execute('''SELECT
+    age,
+    business_travel,
+    distance_from_home,
+    education,
+    education_field,
+    employee_number,
+    environment_satisfaction,
+    gender,
+    job_satisfaction,
+    marital_status,
+    monthly_income,
+    num_companies_worked,
+    overtime,
+    percent_salary_hike,
+    performance_rating,
+    relationship_satisfaction,
+    stock_option_level,
+    total_working_years,
+    training_times_last_year,
+    work_life_balance
+FROM employee_data
+ORDER BY employee_number DESC
+LIMIT 1;
+''')
+                data = cursor.fetchone()
+            elif model_filename == "models/model_1_2_3_4_5_6.pkl":
+                cursor.execute('''SELECT employee_number,
+                               SELECT age, business_travel, department, distance_from_home,
+       education, education_field, employee_number, environment_satisfaction, gender,
+       job_involvement, job_level, job_role, job_satisfaction, marital_status,
+       monthly_income, num_companies_worked, overtime, percent_salary_hike, performance_rating,
+       relationship_satisfaction, stock_option_level, total_working_years, training_times_last_year,
+       work_life_balance, years_at_company, years_in_current_role, years_since_last_promotion,
+       years_with_curr_manager from employee_data ORDER BY employee_number DESC LIMIT 1''')
+                data = cursor.fetchone()
+            print("Form values:", request.form)
+
+            
             print("Model Filename:", model_filename)
             try:
                 dynamic_model = joblib.load(model_filename)
@@ -344,9 +499,12 @@ def index():
 
             features = preprocess_input(data)
             prediction_result = "No" if dynamic_model.predict([features])[0] == 1 else "Yes"
-
-            return render_template("result.html", prediction=prediction_result)
-
+            try:
+                return render_template("result.html", prediction=prediction_result)
+                print("Prediction Result:", prediction_result)
+            except Exception as e:
+                print("Error rendering result:", e)
+                return render_template("index.html", error="Error rendering result page.")
 
         except Exception as e:
             print("Database Error:", e)
