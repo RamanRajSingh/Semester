@@ -10,8 +10,8 @@
     align-self: center;
     margin: 0px;
     padding: 0px;
-    background-image: url(img/login.png);
-    background-size: 98vw;
+    background-image: url(img/login-back-2.jpg);
+    background-size: 100vw;
     background-repeat: no-repeat;
     background-position: center;
     display: flex;
@@ -288,4 +288,13 @@
     background-size: 100vh;
     background-position-x: center;
 
+}
+
+/* For small sized devices*/
+@media (max-width: 600px) {
+    .login-page {
+        background-repeat: no-repeat;
+        background-size: 100vh;
+        background-position-x: center;
+    }
 }

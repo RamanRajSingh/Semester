@@ -499,8 +499,9 @@ LIMIT 1;
 
             features = preprocess_input(data)
             prediction_result = "No" if dynamic_model.predict([features])[0] == 1 else "Yes"
+            employee_number = form_data.get('employee_number')
             try:
-                return render_template("result.html", prediction=prediction_result)
+                return render_template("result.html", employee_number=employee_number ,prediction=prediction_result)
                 print("Prediction Result:", prediction_result)
             except Exception as e:
                 print("Error rendering result:", e)
