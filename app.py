@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-import mysql.connector
+# instead of mysql.connector or mysqlclient
+import pymysql
+pymysql.install_as_MySQLdb()
+
 from mysql.connector import Error
 import pickle
 import joblib
