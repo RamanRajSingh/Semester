@@ -3,6 +3,53 @@
     src: url(font/Gilroy-ExtraBold.otf);
 }
 
+/*General styles that are used commonly by the required tags*/
+.special-button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #0000005c;
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
+    display: inline-block;
+    backdrop-filter: blur(100px);
+    font-size: 30px;
+    font-family: rrs;
+    width: 90%;
+}
+
+.head {
+    font-size: 100px;
+    color: aliceblue;
+    font-style: italic;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+    from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #00e608, 0 0 40px #41e550, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+    }
+
+    viant {
+        text-shadow: 0 0 20px #fff, 0 0 30px #ff4d4d, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+    }
+
+    to {
+        text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff0000, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+    }
+}
+
+
+.tick:hover {
+    cursor: pointer;
+}
+
 /* for login page */
 .login-page {
     flex-direction: column;
@@ -87,37 +134,6 @@
     padding-inline-start: 20px;
 }
 
-.head {
-    font-size: 100px;
-    color: aliceblue;
-    font-style: italic;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    -webkit-animation: glow 1s ease-in-out infinite alternate;
-    -moz-animation: glow 1s ease-in-out infinite alternate;
-    animation: glow 1s ease-in-out infinite alternate;
-}
-
-@-webkit-keyframes glow {
-    from {
-        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #00e608, 0 0 40px #41e550, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
-    }
-
-    viant {
-        text-shadow: 0 0 20px #fff, 0 0 30px #ff4d4d, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
-    }
-
-    to {
-        text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff0000, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
-    }
-}
-
-
-.tick:hover {
-    cursor: pointer;
-}
 
 .main>.form>.first {}
 
@@ -187,6 +203,8 @@
 
 .main>.form>.fourth {}
 
+.main>.form>.fourth>.head-container {}
+
 .main>.form>.fourth>.input-container {
     flex-direction: row;
     justify-content: space-between;
@@ -196,6 +214,7 @@
 .main>.form>.fourth>.input-container>.input4 {
     color: white;
     background-color: black;
+    border: 2px;
     border-radius: 25px;
     width: 30%;
     height: 25px;
@@ -215,6 +234,7 @@
 .main>.form>.fifth>.input-container>.input5 {
     color: white;
     background-color: black;
+    border: 2px;
     border-radius: 25px;
     width: 20%;
     height: 25px;
@@ -234,6 +254,7 @@
 .main>.form>.sixth>.input-container>.input6 {
     color: white;
     background-color: black;
+    border: 2px;
     border-radius: 25px;
     width: 30%;
     height: 25px;
@@ -263,21 +284,6 @@
     cursor: pointer;
 }
 
-/*General styles that are used commonly by the required tags*/
-.special-button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #0000005c;
-    color: white;
-    cursor: pointer;
-    border-radius: 8px;
-    display: inline-block;
-    backdrop-filter: blur(100px);
-    font-size: 30px;
-    font-family: rrs;
-    width: 90%;
-}
-
 
 
 /** for prediction or result page */
@@ -291,10 +297,145 @@
 }
 
 /* For small sized devices*/
-@media (max-width: 600px) {
+@media screen and (max-width: 800px) {
+
+    /* general style used by any tag*/
+    .head {
+        font-size: xx-large;
+        color: cornflowerblue;
+        background-color: rgba(0, 0, 0, 0.273);
+    }
+
+    .special-button {
+        width: 100%;
+    }
+
+    .option {
+        background-color: transparent;
+        backdrop-filter: blur(0px);
+        padding: 10px 0px;
+    }
+
+    /* For login page */
     .login-page {
         background-repeat: no-repeat;
         background-size: 100vh;
         background-position-x: center;
+    }
+
+
+
+    /*For Dashboard*/
+    .main {
+        background: linear-gradient(0deg, rgba(34, 74, 195, 1) 0%, rgba(252, 122, 0, 1) 87%);
+    }
+
+    .main>.form {
+        padding-inline: 10px;
+        width: 90vw;
+    }
+
+    .main>.form>.first {
+        width: 91vw;
+    }
+
+    .main>.form>.first>.input-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .main>.form>.first>.input-container>.input1 {
+        width: 90%;
+    }
+
+    .main>.form>.second {
+        width: 93%;
+    }
+
+    .main>.form>.second>.input-container {
+
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        width: 100%;
+        align-items: center;
+    }
+
+    .main>.form>.second>.input-container>.input2 {
+        width: 90%;
+    }
+
+    .main>.form>.third {
+        width: 93%;
+    }
+
+    .main>.form>.third>.input-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding-inline: 20px;
+        width: 100%;
+    }
+
+    .main>.form>.third>.input-container>.input3 {
+        width: 92%;
+    }
+
+    .main>.form>.fourth>.head-container {
+        display: flex;
+        border-radius: 8px;
+        background-color: #0000005c;
+        width: 100%;
+    }
+
+    .main>.form>.fourth>.input-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding-inline: 20px;
+    }
+
+    .main>.form>.fourth>.input-container>.input4 {
+        width: 90%;
+    }
+
+    .main>.form>.fifth>.head-container {
+        display: flex;
+        border-radius: 8px;
+        background-color: #0000005c;
+        width: 100%;
+    }
+
+    .main>.form>.fifth>.input-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding-inline: 20px;
+    }
+
+    .main>.form>.fifth>.input-container>.input5 {
+        width: 90%;
+    }
+
+    .main>.form>.sixth>.head-container {
+        display: flex;
+        border-radius: 8px;
+        background-color: #0000005c;
+        width: 100%;
+    }
+
+    .main>.form>.sixth>.input-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding-inline: 20px;
+    }
+
+    .main>.form>.sixth>.input-container>.input6 {
+        width: 90%;
     }
 }

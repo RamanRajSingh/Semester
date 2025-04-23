@@ -19,7 +19,7 @@
                     <h1 class="special-button one">Employee Demographics</h1>
                     <div class="input-container">
                         <input type="text" name="employee_number" class="input1" placeholder="Enter Employee Number">
-                        <input type="text" name="employee_age" class="input1" placeholder="Enter Employee Age">
+                        <input type="text" name="age" class="input1" placeholder="Enter Employee Age">
                         <select name="gender" class="input1">
                             <option value="">Select Gender</option>
                             <option value="male">Male</option>
@@ -56,7 +56,7 @@
                     <div class="input-container input2">
                         <input type="text" name="total_working_years" class="input2"
                             placeholder="Enter Total Working Years">
-                        <input type="text" name="companies_worked" class="input2"
+                        <input type="text" name="num_companies_worked" class="input2"
                             placeholder="Enter Number of Companies Worked">
                         <input type="text" name="performance_rating" class="input2"
                             placeholder="Enter Performance Rating">
@@ -88,9 +88,12 @@
 
                 <! Optional Sections of the page -->
                     <section class="fourth">
-                        <input type="checkbox" class="tick" id="jobCareerCheckbox" value="4" name="section"
-                            onchange="toggleInputs('input4'); updateCheckedSections();">
-                        <label for="jobCareerCheckbox" class="special-button">Job and Career-related Factors</label>
+                        <div class="head-container">
+                            <input type="checkbox" class="tick" id="jobCareerCheckbox" value="4" name="section"
+                                onchange="toggleInputs('input4'); updateCheckedSections();">
+                            <label for="jobCareerCheckbox" class="special-button option">Job and Career-related
+                                Factors</label>
+                        </div>
                         <div class="input-container input4" style="display: none;">
                             <select name="job_role" class="input4">
                                 <option value="" class="input1">Select job role</option>
@@ -139,10 +142,13 @@
                     </section>
 
                     <section class="fifth">
-                        <input type="checkbox" class="tick" id="WorkEnvironmentandSatisfaction" value="5" name="section"
-                            onchange="toggleInputs('input5'); updateCheckedSections();">
-                        <label for="WorkEnvironmentandSatisfaction" class="special-button">Work Environment and
-                            Satisfaction</label>
+                        <div class="head-container">
+                            <input type="checkbox" class="tick" id="WorkEnvironmentandSatisfaction" value="5"
+                                name="section" onchange="toggleInputs('input5'); updateCheckedSections();">
+                            <label for="WorkEnvironmentandSatisfaction" class="special-button option">Work Environment
+                                and
+                                Satisfaction</label>
+                        </div>
                         <div class="input-container input5" style="display: none;">
                             <select name="work_life_balance" class="input5">
                                 <option value="">Select Work-Life Balance</option>
@@ -178,9 +184,12 @@
                         </div>
                     </section>
                     <section class="sixth">
-                        <input type="checkbox" class="tick" id="CompensationandBenefits" value="6" name="section"
-                            onchange="toggleInputs('input6'); updateCheckedSections();">
-                        <label for="CompensationandBenefits" class="special-button">Compensation and Benefits</label>
+                        <div class="head-container">
+                            <input type="checkbox" class="tick" id="CompensationandBenefits" value="6" name="section"
+                                onchange="toggleInputs('input6'); updateCheckedSections();">
+                            <label for="CompensationandBenefits" class="special-button option">Compensation and
+                                Benefits</label>
+                        </div>
                         <div class="input-container input6" style="display: none;">
                             <input type="text" class="input6" name="monthly_income" placeholder="Enter Monthly Income">
                             <input type="text" class="input6" name="salary_hike"
