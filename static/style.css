@@ -303,7 +303,7 @@
     .head {
         font-size: xx-large;
         color: cornflowerblue;
-        background-color: rgba(0, 0, 0, 0.273);
+        background-color: rgba(0, 0, 0, 0.500);
     }
 
     .special-button {
@@ -321,6 +321,7 @@
         background-repeat: no-repeat;
         background-size: 100vh;
         background-position-x: center;
+        background-image: url(img/login-1.png);
     }
 
 
@@ -437,5 +438,23 @@
 
     .main>.form>.sixth>.input-container>.input6 {
         width: 90%;
+    }
+
+    .submit_button {
+        width: 32%;
+    }
+
+    /*For Result Page*/
+    .result {
+        position: fixed;
+        top: 44%;
+        background-size: 76vh;
+        background-position-x: center;
+        background-position-y: -23%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 }
