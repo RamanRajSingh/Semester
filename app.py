@@ -123,7 +123,7 @@ def sign_up():
         users[username] = password
         return redirect(url_for('login'))
     return render_template('sign-up.html')
-
+print(users)
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
