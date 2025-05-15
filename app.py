@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, flash, redirect, url_for
 import joblib
-
+from tensorflow.keras.models import load_model
+from collections import Counter
+import numpy as np
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
@@ -101,16 +103,36 @@ MODEL_INPUTS = {
     ]
 }
 
-def load_model(key):
+def load_model_0(key):
     model_path = f'models/model_{key}.pkl'
     if model_path not in loaded_models:
         loaded_models[model_path] = joblib.load(model_path)
     return loaded_models[model_path]
+def load_model_1(key):
+    model_path_1 = f'models/modelr_{key}.pkl'
+    if model_path_1 not in loaded_models:
+        loaded_models[model_path_1] = joblib.load(model_path_1)
+    return loaded_models[model_path_1]
 
+users={'admin': 'admin'}
 @app.route('/', methods=['GET', 'POST'])
+def sign_up():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        users[username] = password
+        return redirect(url_for('login'))
+    return render_template('sign-up.html')
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
         if request.form.get('username') == 'admin' and request.form.get('password') == 'admin':
+            print("Login successful!")
+            return redirect(url_for('index'))
+        elif username in users and users[username] == password:
             return redirect(url_for('index'))
         else:
             print("Invalid username or password.")
@@ -182,10 +204,11 @@ def index():
             
 
         try:
-            model = load_model(key)
+            model = load_model_0(key)
             names = MODEL_INPUTS[key]
             features = []
-
+            model_1= load_model_1(key)
+            model_2= load_model(f'models/modela_{key}.h5')
             for nm in names:
                 val = form.get(nm)
 
@@ -196,10 +219,13 @@ def index():
                     features.append(MAPPING[nm].get(val.lower(), 0))
                 else:
                     features.append(int(val))
-
-            pred = model.predict([features])[0]
-            result = 'Yes' if pred == 1 else 'No'
-            print("PREDICTION:", pred)
+            input_array = np.array(features).reshape(1, -1)  # Shape = (1, 28)
+            probability = model_2.predict(input_array)[0][0]
+            prediction = int(probability > 0.5)
+            pred = [model.predict([features])[0],model_1.predict([features])[0],prediction]
+            fin=max(set(pred), key=pred.count)
+            result = 'Yes' if fin == 1 else 'No'
+            print("PREDICTION:", pred,fin)
 
             return render_template('result.html', employee_number=form.get('employee_number'), prediction=result)
 

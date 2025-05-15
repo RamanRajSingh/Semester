@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="icon" href="../static/icon/favicon.ico" type="image/x-icon">
+</head>
+
+<body class="sign">
+    <section class="form">
+        <h1 class="heading">Sign Up</h1>
+        <form action="/" method="POST" action="{{ url_for('sign_up') }}" class="sform">
+            <input type="text" name="username" placeholder="Username" required class="input">
+            <input type="email" name="email" placeholder="Email" required class="input">
+            <input type="password" name="password" placeholder="Password" required class="input">
+            <button type="submit" class="submit">Sign Up</button>
+        </form>
+        <p class="log-sign">Already have an account? <a class="log-sign-link" href="/login">Log in</a></p>
+
+    </section>
+
+</body>
+
+</html>
