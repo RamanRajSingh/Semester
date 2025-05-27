@@ -391,6 +391,33 @@
     cursor: pointer;
 }
 
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 12px;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer>.info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+}
+
+.footer>.info>.header {
+    font-size: 20px;
+    color: white;
+    font-family: rrs;
+    font-weight: 700;
+    margin: 0px;
+}
 
 
 /** for prediction or result page */
@@ -411,6 +438,10 @@
         font-size: xx-large;
         color: cornflowerblue;
         background-color: rgba(0, 0, 0, 0.500);
+        flex-wrap: wrap;
+        flex-wrap: wrap;
+        align-content: center;
+        align-self: center;
     }
 
     .special-button {
