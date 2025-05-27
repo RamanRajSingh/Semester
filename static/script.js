@@ -46,13 +46,14 @@ typeEffect();
 function toggleInputs(className) {
     const inputs = document.querySelector(`.input-container.${className}`);
     const currentDisplay = window.getComputedStyle(inputs).display;
-
     if (currentDisplay === "none") {
         inputs.style.display = "flex";
+        document.querySelector(`.input-container.${className}`).parentNode.classList.remove("autoShow");
     } else {
         inputs.style.display = "none";
     }
 }
+
 
 function ok(event) {
     // Prevent default form action if called from button in a form
