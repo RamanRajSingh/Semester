@@ -48,9 +48,12 @@ function toggleInputs(className) {
     const currentDisplay = window.getComputedStyle(inputs).display;
     if (currentDisplay === "none") {
         inputs.style.display = "flex";
-        document.querySelector(`.input-container.${className}`).parentNode.classList.remove("autoShow");
+        document.querySelector(`.input-container.${className}`).classList.add("autoShowHorizontal");
+        document.querySelector(`.input-container.${className}`).parentNode.classList.remove("autoShowVertical");
     } else {
         inputs.style.display = "none";
+        document.querySelector(`.input-container.${className}`).classList.remove("autoShowHorizontal");
+        document.querySelector(`.input-container.${className}`).parentNode.classList.add("autoShowVertical");
     }
 }
 

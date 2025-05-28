@@ -36,7 +36,7 @@
 
 @-webkit-keyframes glow {
     from {
-        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #00e608, 0 0 40px #41e550, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+        text-shadow: 0 0 10px #fff, 0 0 20px #ffffff, 0 0 30px #00e6db, 0 0 40px #5f41e5, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
     }
 
     viant {
@@ -44,11 +44,11 @@
     }
 
     to {
-        text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff0000, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+        text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff0000, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #8e4dff;
     }
 }
 
-@keyframes autoShowAnimation {
+@keyframes autoShowAnimationVertical {
     from {
         opacity: 0;
         transform: translateY(200px) scale(0.1);
@@ -60,9 +60,32 @@
     }
 }
 
-.autoShow {
-    animation: autoShowAnimation 0.5s ease-in-out both;
-    animation-timeline: view(90% 5%);
+@keyframes autoShowAnimationHorizontal {
+    from {
+        opacity: 0;
+        transform: translateX(200px) scale(0.1);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+
+}
+
+.autoShowHorizontal {
+    animation: autoShowAnimationHorizontal 0.5s ease-in-out both;
+    animation-duration: 2s;
+    animation-delay: 1s;
+    animation-timeline: view(97% 1%);
+    margin-right: 100px;
+}
+
+.autoShowVertical {
+    animation: autoShowAnimationVertical 0.5s ease-in-out both;
+    animation-duration: 2s;
+    animation-delay: 1s;
+    animation-timeline: view(97% 1%);
     margin-bottom: 10px;
 }
 
@@ -330,6 +353,10 @@
 
 .main>.form>.fifth {}
 
+.main>.form>.fifth>.head-container {
+    margin-top: 1.35rem;
+}
+
 .main>.form>.fifth>.input-container {
     flex-direction: row;
     justify-content: space-between;
@@ -350,6 +377,10 @@
 }
 
 .main>.form>.sixth {}
+
+.main>.form>.sixth>.head-container {
+    margin-top: 1.35rem;
+}
 
 .main>.form>.sixth>.input-container {
     flex-direction: row;
@@ -401,14 +432,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .footer>.info {
-    width: 100%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-evenly;
+    font-size: larger;
 }
 
 .footer>.info>.header {
@@ -416,7 +449,19 @@
     color: white;
     font-family: rrs;
     font-weight: 700;
-    margin: 0px;
+    margin-block: 5px;
+}
+
+.footer>.info>.items {
+    position: relative;
+    left: 20px;
+    margin-block: 5px;
+}
+
+.footer>.byline {
+    font-size: xx-large;
+    color: yellow;
+
 }
 
 
@@ -435,13 +480,17 @@
 
     /* general style used by any tag*/
     .head {
-        font-size: xx-large;
+        font-size: 51px;
         color: cornflowerblue;
         background-color: rgba(0, 0, 0, 0.500);
         flex-wrap: wrap;
-        flex-wrap: wrap;
         align-content: center;
         align-self: center;
+        text-align: center;
+        height: 177.5px;
+        padding: 10px;
+        border-radius: 8px;
+        width: 90%;
     }
 
     .special-button {
@@ -472,6 +521,8 @@
     /*For Dashboard*/
     .main {
         background: linear-gradient(0deg, rgba(34, 74, 195, 1) 0%, rgba(252, 122, 0, 1) 87%);
+        display: flex;
+        flex-direction: column;
     }
 
     .main>.form {
@@ -481,6 +532,7 @@
 
     .main>.form>.first {
         width: 91vw;
+        animation: autoShowAnimationHorizontal 2s ease-in-out 0.5s 1 alternate both;
     }
 
     .main>.form>.first>.input-container {
@@ -490,10 +542,12 @@
 
     .main>.form>.first>.input-container>.input1 {
         width: 90%;
+        animation: autoShowAnimationHorizontal 2s ease-in-out 0.5s 1 alternate both;
     }
 
     .main>.form>.second {
         width: 93%;
+        animation: autoShowAnimationHorizontal 2s ease-in-out 0.5s 1 alternate both;
     }
 
     .main>.form>.second>.input-container {
@@ -503,14 +557,17 @@
         padding: 20px;
         width: 100%;
         align-items: center;
+        animation: autoShowAnimationHorizontal 2s ease-in-out 0.5s 1 alternate both;
     }
 
     .main>.form>.second>.input-container>.input2 {
         width: 90%;
+        animation: autoShowAnimationHorizontal 2s ease-in-out 0.5s 1 alternate both;
     }
 
     .main>.form>.third {
         width: 93%;
+        animation: autoShowAnimationHorizontal 2s ease-in-out 0.5s 1 alternate both;
     }
 
     .main>.form>.third>.input-container {
@@ -520,10 +577,12 @@
         align-items: center;
         padding-inline: 20px;
         width: 100%;
+        animation: autoShowAnimationHorizontal 2s ease-in-out 0.5s 1 alternate both;
     }
 
     .main>.form>.third>.input-container>.input3 {
         width: 92%;
+        animation: autoShowAnimationHorizontal 2s ease-in-out 0.5s 1 alternate both;
     }
 
     .main>.form>.fourth>.head-container {
@@ -585,6 +644,21 @@
 
     .submit_button {
         width: 32%;
+    }
+
+    .footer>.info {
+        width: 87%;
+        padding-left: 10px;
+    }
+
+    .footer>.info>.items {
+        left: 20px;
+    }
+
+    .footer>.byline {
+        font-size: x-large;
+        text-align: center;
+        width: 57%;
     }
 
     /*For Result Page*/
